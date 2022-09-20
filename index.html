@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hundir la flota</title>
+</head>
+
+<body>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+    <h1>Hundir la flota</h1>
+    <button>New Game</button>
+<table id = "tabla">
+<!-- 
+        <tr>
+            <th>1</th>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+
+
+        </tr>
+        <tr>
+            <th>2</th>
+            <td>X</td>
+            <td>X</td>
+            <td>X</td>
+
+
+        </tr>-->        
+    </table> 
+
+    <script>
+
+        window.onload = main();
+
+        function main() {
+            let tabla = document.getElementById("tabla");
+         
+            for (i=0; i<10; i++) {
+                tabla.innerHTML += '<tr><th>' + (i+1) +'</th><td> X </td></tr>'
+            }
+        }
+    </script>
+
+</body>
+
+</html>
