@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hundir la flota</title>
 </head>
-
 <body>
     <style>
         table,
@@ -18,42 +17,9 @@
     </style>
     <h1>Hundir la flota</h1>
     <button>New Game</button>
-    <table id="tabla">
-        <tbody>
-            <tr id="ABC">
-            </tr>
-        </tbody>
-    </table>
-
-    <script>
-        window.onload = main();
-
-        function main() {
-            let tabla = document.getElementById("tabla");
-            let header = document.getElementById("ABC");
-
-            let filas = 5;
-            let columnas = 5;
-
-            for (x = -1; x < filas; x++) {
-                header.innerHTML += "<tr><th>" + (x+1) + "</th></tr>"
-            }
-
-            let tds = ""
-            let tdsaux = ""
-
-            for (i = 0; i < columnas; i++) {
-                for (j=0; j < columnas; j++) {
-                    tds = tdsaux + "<td>X</td>"
-                }
-                console.log(tds)
-                tabla.innerHTML += "<th>" + (i+1) + "<td>X</td><td>X</td><td>X</td><td>X</td><td>X</td>";
-                
-            }
-
-        }
-    </script>
-
+    <div id="contenedorTabla">
+        <!-- Automatic table generated for JS -->
+    </div>
+    <script src="script.js"></script>
 </body>
-
 </html>
