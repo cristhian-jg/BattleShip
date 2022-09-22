@@ -1,6 +1,8 @@
 let N_FILAS = 10;
 let N_COLUMNAS = 10;
 
+let jugadas = [[11, 12],[36, 37, 38],[61,71,81,91],[29,39,49,59,69]];
+
 
 window.onload = main();
 
@@ -77,5 +79,20 @@ function disparar() {
 
     console.log("Letra: " + letraSeleccionada + " Numero: " + numeroSeleccionado);
 
-    document.getElementById("casilla" + numeroSeleccionado + letraSeleccionada).innerHTML = " ";
+        console.log("Hola" + jugadas[0][numeroSeleccionado]);
+
+        for(k = 0; k < jugadas.length; k++) {
+            for (l = 0; l < jugadas[k].length; l++) {
+                console.log("Hola " + jugadas[k][l]);
+                console.log("Numero: " + letraSeleccionada + "" + numeroSeleccionado);
+                if (letraSeleccionada + "" + numeroSeleccionado == jugadas[k][l]) {
+                    debugger
+                    document.getElementById("casilla" + numeroSeleccionado + "" + letraSeleccionada).innerHTML = "B";
+                    console.log("Que tal")
+                } else {
+                    document.getElementById("casilla" + numeroSeleccionado + letraSeleccionada).innerHTML = " ";
+                }
+            }
+        }
+
 }
