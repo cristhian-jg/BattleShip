@@ -1,11 +1,19 @@
 let N_FILAS = 10;
 let N_COLUMNAS = 10;
 
-let jugadas = [[11, 12],[36, 37, 38],[61,71,81,91],[29,39,49,59,69]];
 
+
+// Posicion de los barcos que estarán en la partida.
+let jugadas = [[11, 12], [36, 37, 38], [61, 71, 81, 91], [29, 39, 49, 59, 69]];
+
+// Cada vez que el usuario haga un disparo se almacenerá la casilla que se ha disparado en este Array.
+let disparos = [];
+
+// Utilizo estos arrays para dar diferente información al usuario. 
 let frasesFallo = ["Has fallado, parece que no había nada!", "No ha habido suerte, no has acertado el tiro!", "Intenta mejorar esa puntería, no le has dado a nada!"]
 let frasesAcierto = ["Buen trabajo! Has acertado el tiro!", "Acierto! Justo en el blanco!", "Tu puntería es asombrosa! Has acertado el disparo!"];
 
+// Contadores para la tabla de puntuaciones.
 let contadorDisparos = 0;
 let contadorDisparosFallados = 0;
 let contadorDisparosAcertados = 0;
@@ -19,11 +27,18 @@ function main() {
     let contenedorTabla = document.getElementById("contenedorTabla");
     let controles = document.getElementById("controles");
 
+    contadorDisparos = 0;
+    contadorDisparosAcertados = 0;
+    contadorDisparosFallados = 0;
+
+    document.getElementById("Aciertos").innerHTML = 0;
+    document.getElementById("Fallos").innerHTML = 0;
+    document.getElementById("Disparos").innerHTML = 0;
 
     contenedorTabla.innerHTML = "";
     controles.innerHTML = "";
     mensaje.innerHTML = "La partida ha comenzado, piensa en tu primer movimiento!"
-    
+
     tablaPuntuaciones.style = "display; block"
 
     let tabla = "<table>";
@@ -81,9 +96,13 @@ function main() {
     controles.innerHTML = select + selectNumeros;
 }
 
+/**
+ * Funcion que controla el disparo o jugada que va a hacer el jugador, además le muestra la información al jugador. 
+ */
 function disparar() {
 
     let disparoAcertado = false;
+    let disparado = false;
 
     let selectionLetra = document.getElementById("letraSeleccionada");
     let letraSeleccionada = selectionLetra.options[selectionLetra.selectedIndex].value;
@@ -91,14 +110,17 @@ function disparar() {
     let selectionNumero = document.getElementById("numeroSeleccionado");
     let numeroSeleccionado = selectionNumero.options[selectionNumero.selectedIndex].value;
 
-    console.log("Letra: " + letraSeleccionada + " Numero: " + numeroSeleccionado);
+    // Comprobación de si no se ha disparado ya a esa casilla.
+    for (v = 0; v < disparos.length; v++) {
+        if (numeroSeleccionado + "" + letraSeleccionada == disparos[v]) {
+            disparado = true;
+        }
+    }
 
-        console.log("Hola" + jugadas[0][numeroSeleccionado]);
-
-        for(k = 0; k < jugadas.length; k++) {
+    // Solo se realizará el disparo si no se ha disparado a esa casilla antes, en caso contrario se informará al usuario
+    if (!disparado) {
+        for (k = 0; k < jugadas.length; k++) {
             for (l = 0; l < jugadas[k].length; l++) {
-                console.log("Hola " + jugadas[k][l]);
-                console.log("Numero: " + letraSeleccionada + "" + numeroSeleccionado);
                 if (letraSeleccionada + "" + numeroSeleccionado == jugadas[k][l]) {
                     //debugger
                     disparoAcertado = true;
@@ -106,20 +128,31 @@ function disparar() {
             }
         }
 
+        // Si hay alguna coincidencia en el Array habrá acertado el disparo y se podrá la casilla con la letra B azul.
         if (disparoAcertado) {
             document.getElementById("casilla" + numeroSeleccionado + "" + letraSeleccionada).innerHTML = "B";
+            document.getElementById("casilla" + numeroSeleccionado + "" + letraSeleccionada).style = "color: blue; font-weight: bold; "
             disparoAcertado = false;
             mensaje.innerHTML = frasesAcierto[Math.floor(Math.random() * frasesAcierto.length)];
             contadorDisparosAcertados++;
+            disparos.push(numeroSeleccionado + "" + letraSeleccionada);
+            // Sino hay coincidencias significará que no has acertado, por lo que pintará vacio.
         } else {
             document.getElementById("casilla" + numeroSeleccionado + letraSeleccionada).innerHTML = " ";
             mensaje.innerHTML = frasesFallo[Math.floor(Math.random() * frasesFallo.length)];
             contadorDisparosFallados++;
+            disparos.push(numeroSeleccionado + "" + letraSeleccionada);
         }
+
+
 
         contadorDisparos++;
 
+        // Actualiza la tabla de marcadores.
         document.getElementById("Aciertos").innerHTML = contadorDisparosAcertados;
         document.getElementById("Fallos").innerHTML = contadorDisparosFallados;
         document.getElementById("Disparos").innerHTML = contadorDisparos;
+    } else {
+        mensaje.innerHTML = "Parece que ya has disparado a esa casilla!";
+    }
 }
