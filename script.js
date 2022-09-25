@@ -3,16 +3,28 @@ let N_COLUMNAS = 10;
 
 let jugadas = [[11, 12],[36, 37, 38],[61,71,81,91],[29,39,49,59,69]];
 
+let frasesFallo = ["Has fallado, parece que no había nada!", "No ha habido suerte, no has acertado el tiro!", "Intenta mejorar esa puntería, no le has dado a nada!"]
+let frasesAcierto = ["Buen trabajo! Has acertado el tiro!", "Acierto! Justo en el blanco!", "Tu puntería es asombrosa! Has acertado el disparo!"];
 
-window.onload = main();
+let contadorDisparos = 0;
+let contadorDisparosFallados = 0;
+let contadorDisparosAcertados = 0;
+
+let mensaje = document.getElementById("mensaje");
 
 function main() {
+
+    let tablaPuntuaciones = document.getElementById("tablaPuntaciones");
 
     let contenedorTabla = document.getElementById("contenedorTabla");
     let controles = document.getElementById("controles");
 
+
     contenedorTabla.innerHTML = "";
     controles.innerHTML = "";
+    mensaje.innerHTML = "La partida ha comenzado, piensa en tu primer movimiento!"
+    
+    tablaPuntuaciones.style = "display; block"
 
     let tabla = "<table>";
     let header = "";
@@ -71,6 +83,8 @@ function main() {
 
 function disparar() {
 
+    let disparoAcertado = false;
+
     let selectionLetra = document.getElementById("letraSeleccionada");
     let letraSeleccionada = selectionLetra.options[selectionLetra.selectedIndex].value;
 
@@ -86,13 +100,26 @@ function disparar() {
                 console.log("Hola " + jugadas[k][l]);
                 console.log("Numero: " + letraSeleccionada + "" + numeroSeleccionado);
                 if (letraSeleccionada + "" + numeroSeleccionado == jugadas[k][l]) {
-                    debugger
-                    document.getElementById("casilla" + numeroSeleccionado + "" + letraSeleccionada).innerHTML = "B";
-                    console.log("Que tal")
-                } else {
-                    document.getElementById("casilla" + numeroSeleccionado + letraSeleccionada).innerHTML = " ";
+                    //debugger
+                    disparoAcertado = true;
                 }
             }
         }
 
+        if (disparoAcertado) {
+            document.getElementById("casilla" + numeroSeleccionado + "" + letraSeleccionada).innerHTML = "B";
+            disparoAcertado = false;
+            mensaje.innerHTML = frasesAcierto[Math.floor(Math.random() * frasesAcierto.length)];
+            contadorDisparosAcertados++;
+        } else {
+            document.getElementById("casilla" + numeroSeleccionado + letraSeleccionada).innerHTML = " ";
+            mensaje.innerHTML = frasesFallo[Math.floor(Math.random() * frasesFallo.length)];
+            contadorDisparosFallados++;
+        }
+
+        contadorDisparos++;
+
+        document.getElementById("Aciertos").innerHTML = contadorDisparosAcertados;
+        document.getElementById("Fallos").innerHTML = contadorDisparosFallados;
+        document.getElementById("Disparos").innerHTML = contadorDisparos;
 }

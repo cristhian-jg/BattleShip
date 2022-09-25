@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hundir la flota</title>
 </head>
+
 <body>
     <style>
         table,
@@ -16,14 +17,37 @@
         }
     </style>
     <h1>Hundir la flota</h1>
-    <button>New Game</button>
+    <button onclick="main()">New Game</button>
     <div id="contenedorTabla">
         <!-- Tabla generada automaticamente por JS -->
     </div>
+
     <div id="controles">
         <!-- Selects y boton generados automaticamente por JS-->
     </div>
 
+    <div>
+        <p id="mensaje"><b>Pulsa New Game para empezar a jugar! </b></p>
+    </div>
+
+    <div id="tablaPuntaciones" style="display: none;">
+        <table>
+            <tr>
+                <th>Aciertos</th>
+                <th>Fallos</th>
+                <th>Disparos</th>
+            </tr>
+
+            <tr>
+                <td id="Aciertos">0</td>
+                <td id="Fallos">0</td>
+                <td id="Disparos">0</td>
+            </tr>
+
+        </table>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>
